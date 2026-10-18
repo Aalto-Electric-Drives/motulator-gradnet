@@ -6,8 +6,6 @@ Documentation: https://aalto-electric-drives.github.io/motulator-gradnet/
 
 This package trains gradient networks (GradNets) that model the current and flux linkage maps of synchronous machines, including spatial harmonics, from measured or finite-element data [1]. A GradNet is the gradient of a scalar state function, the magnetic energy or co-energy, so the map is a conservative vector field by construction [2], and the monotonicity of the flux-linkage–current map is ensured. The networks are defined and trained with PyTorch. A trained network is saved as a NumPy function, which the magnetic maps of *motulator* evaluate in the machine models and control systems without PyTorch. The package also compares the trained maps with the data.
 
-**Status:** The package is in early development, and its interfaces may change before version 1.0. It currently supports *motulator* 0.15, and the support is extended after each new release of *motulator* has been tested.
-
 ## Installation
 
 The package is not yet on PyPI. Install it from a clone (*motulator* and PyTorch are installed as dependencies):
