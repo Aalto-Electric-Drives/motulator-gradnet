@@ -15,16 +15,13 @@ Install the package from PyPI in a [virtual environment](https://packaging.pytho
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install --index-url https://download.pytorch.org/whl/cpu torch  # Optional
 pip install motulator-gradnet
 ```
 
-On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`. The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed in the activated environment before the package with the command:
+On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`. The third command is optional and installs a CPU-only build of PyTorch, which is sufficient for the small networks of this package. The PyTorch wheels on PyPI for Linux include CUDA support and are large.
 
-```bash
-pip install --index-url https://download.pytorch.org/whl/cpu torch
-```
-
-The package supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested. For development, clone the repository and install the package with `pip install -e .[dev]`.
+For development, clone the repository and install the package with `pip install -e .[dev]`.
 
 ## Usage
 
@@ -96,9 +93,3 @@ The map is used in the machine models and control systems of *motulator* through
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-## License
-
-MIT

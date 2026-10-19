@@ -9,16 +9,11 @@ The simplest way to install the package is to use `pip` in a [virtual environmen
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install --index-url https://download.pytorch.org/whl/cpu torch  # Optional
 pip install motulator-gradnet
 ```
 
-On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`.
-
-The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed in the activated environment before the package with the command:
-
-```bash
-pip install --index-url https://download.pytorch.org/whl/cpu torch
-```
+On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`. The third command is optional and installs a CPU-only build of PyTorch, which is sufficient for the small networks of this package. The PyTorch wheels on PyPI for Linux include CUDA support and are large.
 
 ## Option 2: Clone the Repository
 
