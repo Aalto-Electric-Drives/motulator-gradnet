@@ -20,6 +20,8 @@ py -m venv .venv
 pip install motulator-gradnet
 ```
 
+If PowerShell does not allow running the activation script, allow it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`.
+
 ````{tip}
 On Linux, the PyTorch wheels on PyPI include CUDA support and are large. A CPU-only build is sufficient for the small networks of this package. To use it, install it in the virtual environment before the package:
 
@@ -28,7 +30,7 @@ pip install --index-url https://download.pytorch.org/whl/cpu torch
 ```
 ````
 
-The plots need a GUI library for *matplotlib*. On some Linux systems, it must be installed separately, see the [installation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html).
+The plots need a GUI library for *matplotlib*. On some Linux systems, it must be installed separately; see the [installation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html).
 
 ## Option 2: Clone the Repository
 
