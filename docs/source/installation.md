@@ -2,22 +2,22 @@
 
 The package requires Python 3.12 or newer. The installation of *motulator* and its dependencies is described in the [documentation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html); *motulator* and PyTorch are installed automatically as dependencies of this package. The package supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested.
 
-The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed before the package with the command:
-
-```bash
-pip install --index-url https://download.pytorch.org/whl/cpu torch
-```
-
 ## Option 1: Use pip
 
-The simplest way to install the package is to use `pip`:
+The simplest way to install the package is to use `pip` in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/). On Linux and macOS:
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install motulator-gradnet
 ```
 
-```{note}
-Instead of global installation described above, using a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments) is generally recommended.
+On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`.
+
+The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed in the activated environment before the package with the command:
+
+```bash
+pip install --index-url https://download.pytorch.org/whl/cpu torch
 ```
 
 ## Option 2: Clone the Repository
@@ -42,7 +42,7 @@ For developers and advanced users, cloning the repository is recommended. The fo
    pip install -e .[dev,doc]
    ```
 
-   The `dev` dependencies are needed for the tests and the code checks and the `doc` dependencies for building this documentation.
+   The `dev` dependencies are needed for the tests and the code checks and the `doc` dependencies for building this documentation. The CPU-only build of PyTorch can be installed before the package as in Option 1.
 
 1. Now you can run the example scripts in the `examples/` folder.
 
