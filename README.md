@@ -21,7 +21,7 @@ pip install motulator-gradnet
 
 On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`. The third command is optional and installs a CPU-only build of PyTorch, which is sufficient for the small networks of this package. The PyTorch wheels on PyPI for Linux include CUDA support and are large.
 
-For development, clone the repository and install the package with `pip install -e .[dev]`.
+For development, clone the repository and install the package with `pip install -e ".[dev]"`.
 
 ## Usage
 

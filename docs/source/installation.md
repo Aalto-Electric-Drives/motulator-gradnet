@@ -1,47 +1,56 @@
 # Installation
 
-The package requires Python 3.12 or newer. The installation of *motulator* and its dependencies is described in the [documentation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html); *motulator* and PyTorch are installed automatically as dependencies of this package. The package supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested.
+The package requires Python 3.12 or newer, and it installs *motulator* and PyTorch as its dependencies. It supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested.
 
 ## Option 1: Use pip
 
-The simplest way to install the package is to use `pip` in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/). On Linux and macOS:
+Install the package in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/). On Linux and macOS:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install --index-url https://download.pytorch.org/whl/cpu torch  # Optional
 pip install motulator-gradnet
 ```
 
-On Windows, the environment is created and activated with `py -m venv .venv` and `.venv\Scripts\activate`. The third command is optional and installs a CPU-only build of PyTorch, which is sufficient for the small networks of this package. The PyTorch wheels on PyPI for Linux include CUDA support and are large.
+On Windows:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\activate
+pip install motulator-gradnet
+```
+
+````{tip}
+On Linux, the PyTorch wheels on PyPI include CUDA support and are large. A CPU-only build is sufficient for the small networks of this package. To use it, install it in the virtual environment before the package:
+
+```bash
+pip install --index-url https://download.pytorch.org/whl/cpu torch
+```
+````
+
+The plots need a GUI library for *matplotlib*. On some Linux systems, it must be installed separately, see the [installation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html).
 
 ## Option 2: Clone the Repository
 
-For developers and advanced users, cloning the repository is recommended. The following instructions are for [VS Code](https://code.visualstudio.com):
+Clone the repository to run the examples, which use the datasets and the trained models in `examples/`, or to develop the package. On Linux and macOS:
 
-1. Install VS Code, Python, and `git` on your computer. Install also the recommended extensions in VS Code.
+```bash
+git clone https://github.com/Aalto-Electric-Drives/motulator-gradnet
+cd motulator-gradnet
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev,doc]"
+```
 
-1. Clone the project using the command:
+On Windows, create and activate the virtual environment as in Option 1. The `dev` dependencies are needed for the tests and the code checks, and the `doc` dependencies for building this documentation. The CPU-only build of PyTorch can be installed before the package, as above. In [VS Code](https://code.visualstudio.com/docs/python/environments), the virtual environment can also be created with the Python extension.
 
-   ```bash
-   git clone https://github.com/Aalto-Electric-Drives/motulator-gradnet
-   ```
+Then run an example, e.g.:
 
-1. Launch VS Code from the cloned project's root directory.
+```bash
+python examples/plot_6kw_pmsyrm_flux_map_meas.py
+```
 
-1. [Create a virtual environment](https://code.visualstudio.com/docs/python/environments) in the workspace.
-
-1. Install the package with its optional dependencies in the VS Code terminal, after the virtual environment is created and activated:
-
-   ```bash
-   pip install -e .[dev,doc]
-   ```
-
-   The `dev` dependencies are needed for the tests and the code checks and the `doc` dependencies for building this documentation. The CPU-only build of PyTorch can be installed before the package as in Option 1.
-
-1. Now you can run the example scripts in the `examples/` folder.
-
-The tests are run with `pytest` and the documentation is built with the command:
+The tests are run with `pytest`, and the documentation is built with the command:
 
 ```bash
 sphinx-build -b html docs/source docs/build/html
