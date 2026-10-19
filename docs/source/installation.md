@@ -1,6 +1,6 @@
 # Installation
 
-The package requires Python 3.12 or newer. The installation of *motulator* and its dependencies is described in the [documentation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html); *motulator* and PyTorch are installed automatically as dependencies of this package.
+The package requires Python 3.12 or newer. The installation of *motulator* and its dependencies is described in the [documentation of *motulator*](https://aalto-electric-drives.github.io/motulator/installation.html); *motulator* and PyTorch are installed automatically as dependencies of this package. The package supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested.
 
 The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed before the package with the command:
 
@@ -10,10 +10,10 @@ pip install --index-url https://download.pytorch.org/whl/cpu torch
 
 ## Option 1: Use pip
 
-The package is not yet on PyPI. It can be installed directly from GitHub with the command:
+The simplest way to install the package is to use `pip`:
 
 ```bash
-pip install git+https://github.com/Aalto-Electric-Drives/motulator-gradnet
+pip install motulator-gradnet
 ```
 
 ```{note}

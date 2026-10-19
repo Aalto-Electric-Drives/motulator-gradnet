@@ -2,16 +2,18 @@
 
 **Training of gradient-network magnetic models of synchronous machines for [motulator](https://github.com/Aalto-Electric-Drives/motulator)**
 
+[![PyPI version](https://img.shields.io/pypi/v/motulator-gradnet.svg)](https://pypi.org/project/motulator-gradnet/)
+
 Documentation: https://aalto-electric-drives.github.io/motulator-gradnet/
 
 This package trains gradient networks (GradNets) that model the current and flux linkage maps of synchronous machines, including spatial harmonics, from measured or finite-element data [1]. A GradNet is the gradient of a scalar state function, the magnetic energy or co-energy, so the map is a conservative vector field by construction [2], and the monotonicity of the flux-linkage–current map is ensured. The networks are defined and trained with PyTorch. A trained network is saved as a NumPy function, which the magnetic maps of *motulator* evaluate in the machine models and control systems without PyTorch. The package also compares the trained maps with the data.
 
 ## Installation
 
-The package is not yet on PyPI. Install it from a clone (*motulator* and PyTorch are installed as dependencies):
+Install the package from PyPI (*motulator* and PyTorch are installed as dependencies):
 
 ```bash
-pip install -e .
+pip install motulator-gradnet
 ```
 
 The PyTorch wheels on PyPI for Linux include CUDA support and are large. The small networks of this package are trained in a reasonable time on a CPU, so a CPU-only build is sufficient. It is installed before the package with the command:
@@ -19,6 +21,8 @@ The PyTorch wheels on PyPI for Linux include CUDA support and are large. The sma
 ```bash
 pip install --index-url https://download.pytorch.org/whl/cpu torch
 ```
+
+The package supports *motulator* 0.15 and 0.16, and the support is extended after each new release of *motulator* has been tested. For development, clone the repository and install the package with `pip install -e .[dev]`.
 
 ## Usage
 
