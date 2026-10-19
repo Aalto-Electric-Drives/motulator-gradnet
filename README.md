@@ -72,6 +72,33 @@ The map is used in the machine models and control systems of *motulator* through
 1. Li, Foissner, Martin, Piippo, Hinkkanen, "Gradient networks for universal magnetic modeling of synchronous machines," 2026, https://arxiv.org/abs/2602.14947
 1. Chaudhari, Pranav, Moura, "Gradient networks," IEEE Trans. Signal Process., 2025, https://doi.org/10.1109/TSP.2024.3496692
 
+## Contributors
+
+Thanks go to these wonderful people:
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- prettier-ignore-start -->
+
+<!-- markdownlint-disable -->
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://research.aalto.fi/en/persons/marko-hinkkanen"><img src="https://avatars.githubusercontent.com/u/76600872?v=4?s=50" width="50px;" alt="Marko Hinkkanen"/><br /><sub><b>Marko Hinkkanen</b></sub></a><br /><a href="https://github.com/Aalto-Electric-Drives/motulator-gradnet/commits?author=mhinkkan" title="Code">💻</a> <a href="#ideas-mhinkkan" title="Ideas, Planning, & Feedback">🤔</a> <a href="#example-mhinkkan" title="Examples">💡</a> <a href="#mentoring-mhinkkan" title="Mentoring">🧑‍🏫</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Exiaolibur"><img src="https://avatars.githubusercontent.com/u/134478666?v=4?s=50" width="50px;" alt="Junyi Li"/><br /><sub><b>Junyi Li</b></sub></a><br /><a href="https://github.com/Aalto-Electric-Drives/motulator-gradnet/commits?author=Exiaolibur" title="Code">💻</a> <a href="#example-Exiaolibur" title="Examples">💡</a> <a href="#ideas-Exiaolibur" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
 ## License
 
 MIT
