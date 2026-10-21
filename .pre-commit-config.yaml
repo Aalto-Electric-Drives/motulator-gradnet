@@ -24,7 +24,7 @@ repos:
     rev: v1.1.414
     hooks:
       - id: pyright
-        additional_dependencies: ["motulator>=0.15,<0.17", numpy, matplotlib, torch, tqdm, pytest, sphinx-gallery]
+        additional_dependencies: ["motulator>=0.15,<0.18", numpy, matplotlib, torch, tqdm, pytest, sphinx-gallery]
         args:
         - --venvpath=./.venv
 
