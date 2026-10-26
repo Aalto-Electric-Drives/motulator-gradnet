@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "motulator-gradnet"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
-    "motulator>=0.15.0,<0.18",
+    "motulator>=0.15.0,<0.19",
     "numpy",
     "matplotlib",
     "torch",
