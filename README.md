@@ -95,3 +95,7 @@ The map is used in the machine models and control systems of *motulator* through
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## Acknowledgment
+
+This project has been sponsored by ABB Oy, the Aalto University House of AI, and the Research Council of Finland through the *Centre of Excellence in High-Speed Electromechanical Energy Conversion Systems*.
