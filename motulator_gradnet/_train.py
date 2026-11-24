@@ -22,6 +22,9 @@ class Trainer:
     """
     Trainer class for GradNet models.
 
+    The loss is computed from the output symmetrized about the d axis, in the same way
+    as the maps of motulator evaluate the trained model.
+
     Parameters
     ----------
     model : GradNet
@@ -90,6 +93,12 @@ class Trainer:
             return self._compute_loss_no_harmonics(batch)
         return self._compute_loss_with_harmonics(batch)
 
+    def _output(self, inputs: Tensor) -> Tensor:
+        """Return the output of the model symmetrized about the d axis."""
+        # The q-axis component and the sine of the angle change their signs
+        conj = inputs.new_tensor([1.0, -1.0]).repeat(inputs.shape[1] // 2)
+        return 0.5 * (self.model(inputs) + conj * self.model(conj * inputs))
+
     def _point_weights(self, i_d: Tensor, i_q: Tensor) -> Tensor:
         """Return the loss weights of the data points with the given currents."""
         is_low = i_d**2 + i_q**2 < self.i_low**2
@@ -106,7 +115,7 @@ class Trainer:
         """Compute loss for a batch without spatial harmonics."""
         mode = cast(Literal["current_map", "flux_map"], self.mode)
         inputs, targets = self.dataset.prepare_batch(batch, mode)
-        output = self.model(inputs)
+        output = self._output(inputs)
         return _mse_loss(output, targets, self._weights(batch))
 
     def _compute_loss_with_harmonics(self, batch: tuple[Tensor, ...]) -> Tensor:
@@ -117,7 +126,7 @@ class Trainer:
         _, _, _, _, theta_m, tau_m_theta = batch
         cos_t = torch.cos(k * theta_m)
         sin_t = torch.sin(k * theta_m)
-        output = self.model(inputs)
+        output = self._output(inputs)
         dW_dcos = output[:, 2]
         dW_dsin = output[:, 3]
         dW_dtheta = k * (cos_t * dW_dsin - sin_t * dW_dcos)
@@ -148,7 +157,7 @@ def _mse_loss(output: Tensor, targets: Tensor, w: Tensor | None) -> Tensor:
 def train_gradnet(  # noqa: PLR0913
     dataset_path: str | Path,
     base: BaseValues,
-    is_flux_map=False,
+    is_flux_map: bool = False,
     k: int | None = None,
     num_modules: int = 1,
     embed_dim: int = 12,
@@ -162,9 +171,15 @@ def train_gradnet(  # noqa: PLR0913
     *,
     i_low: float = 0.0,
     weight_low: float = 1.0,
+    subsample_offset: int = 0,
+    seed: int = 42,
 ) -> None:
     """
     Train and save the GradNet model.
+
+    The loss is computed from the output symmetrized about the d axis, in the same way
+    as the maps of motulator evaluate the trained model. Hence, the dataset does not
+    need to contain the points mirrored about the d axis.
 
     Parameters
     ----------
@@ -209,10 +224,17 @@ def train_gradnet(  # noqa: PLR0913
         so the loss of each batch is an unbiased estimate of the weighted loss of the
         whole set, which corresponds to repeating those points `weight_low` times in the
         dataset, except that the number of steps per epoch is unchanged.
+    subsample_offset : int, optional
+        Index of the first data point taken in the subsampling, defaults to 0. The
+        training sets with the offsets from 0 to ``subsample - 1`` are disjoint and
+        cover the whole dataset, which allows the sensitivity of the trained map to
+        the selection of the training points to be evaluated.
+    seed : int, optional
+        Seed of the random number generators, defaults to 42. The seed determines the
+        initial weights and the order of the data points in the batches.
 
     """
     # Set random seed for reproducibility
-    seed = 42
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -237,6 +259,7 @@ def train_gradnet(  # noqa: PLR0913
         k=k,
         batch_size=batch_size,
         subsample=subsample,
+        subsample_offset=subsample_offset,
     )
     dataset = cast(BaseDataset | SpatialHarmonicsDataset, data_loader.dataset)
 

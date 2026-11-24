@@ -59,9 +59,7 @@ current_map_fcn = gn.CurrentMap(model)
 # %%
 # Load the dataset for comparison and split it into training and validation sets.
 
-train_data, val_data = get_training_data(
-    str(dataset_path), subsample=subsample, base=base
-)
+train_data, val_data = get_training_data(dataset_path, subsample=subsample, base=base)
 
 # %%
 # Plot the current map.

@@ -25,7 +25,7 @@ For development, clone the repository and install the package with `pip install 
 
 ## Usage
 
-A dataset is an npz file with the complex arrays `i_s_dq` (stator current, A) and `psi_s_dq` (stator flux linkage, Vs) of the same shape, peak-valued space vectors in rotor coordinates. A dataset with spatial harmonics has also the arrays `theta_m` (electrical rotor angle, rad) and `tau_m` (electromagnetic torque per pole pair, Nm). The following example trains a flux linkage map from the measured dataset of a 5.6-kW PM synchronous reluctance machine in `examples/datasets/`:
+A dataset is an npz file with the complex arrays `i_s_dq` (stator current, A) and `psi_s_dq` (stator flux linkage, Vs) of the same shape, peak-valued space vectors in rotor coordinates. A dataset with spatial harmonics has also the arrays `theta_m` (electrical rotor angle, rad) and `tau_m` (electromagnetic torque per pole pair, Nm). Since the maps are symmetric about the d axis in both training and evaluation, the dataset does not need to contain the points with negative q-axis current. The following example trains a flux linkage map from the measured dataset of a 5.6-kW PM synchronous reluctance machine in `examples/datasets/`:
 
 ```python
 import motulator.drive.gradnet as gn
@@ -52,6 +52,7 @@ train_gradnet(
     epochs=20000,
     subsample=10,
     activation=PNormGradient,
+    seed=0,  # A network with six hidden units is sensitive to the initial weights
     save_model_path="flux_map.npz",
 )
 

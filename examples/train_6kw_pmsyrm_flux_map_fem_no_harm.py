@@ -65,7 +65,7 @@ flux_map_fcn = gn.FluxMap(model)
 # %%
 # Load the validation data, i.e., the complement of the training data.
 
-_, val_data = get_training_data(str(dataset_path), base=base, subsample=subsample)
+_, val_data = get_training_data(dataset_path, base=base, subsample=subsample)
 
 
 # %%
