@@ -49,6 +49,7 @@ if not trained_path.exists():
         epochs=20000,
         subsample=subsample,
         activation=activation,
+        seed=0,  # A network with six hidden units is sensitive to the initial weights
     )
 
 # %%
@@ -60,9 +61,7 @@ flux_map_fcn = gn.FluxMap(model)
 # %%
 # Load the dataset for comparison and split it into training and validation sets.
 
-train_data, val_data = get_training_data(
-    str(dataset_path), base=base, subsample=subsample
-)
+train_data, val_data = get_training_data(dataset_path, base=base, subsample=subsample)
 
 # %%
 # Plot the flux map.

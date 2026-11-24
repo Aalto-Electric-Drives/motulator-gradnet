@@ -59,7 +59,7 @@ if not trained_path.exists():
 
 # Get the training and validation data (complement) from the helper function
 _, val_data = get_training_data(
-    str(dataset_path), base=base, subsample=subsample, other_keys=["theta_m", "tau_m"]
+    dataset_path, base=base, subsample=subsample, other_keys=["theta_m", "tau_m"]
 )
 
 # %%

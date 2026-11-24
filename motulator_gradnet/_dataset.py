@@ -17,21 +17,32 @@ class BaseDataset(Dataset):
 
     Parameters
     ----------
-    data_path : str
+    data_path : str | Path
         Path to the npz file containing the dataset.
     base : ~motulator.drive.utils.BaseValues
         Base values of target machine
     subsample : int, optional
         Subsampling rate, defaults to 1 (no subsampling).
+    subsample_offset : int, optional
+        Index of the first data point taken in the subsampling, defaults to 0. The
+        offset is in the range from 0 to ``subsample - 1``.
 
     """
 
-    def __init__(self, data_path: str, base: BaseValues, subsample: int = 1) -> None:
+    def __init__(
+        self,
+        data_path: str | Path,
+        base: BaseValues,
+        subsample: int = 1,
+        subsample_offset: int = 0,
+    ) -> None:
+        if not 0 <= subsample_offset < subsample:
+            raise ValueError("subsample_offset must be in the range [0, subsample)")
         with np.load(data_path) as data:
             i_full = data["i_s_dq"].flatten()
             psi_full = data["psi_s_dq"].flatten()
             # Apply subsampling
-            indices = np.arange(0, len(i_full), subsample)
+            indices = np.arange(subsample_offset, len(i_full), subsample)
             self.indices = indices
             # Load main fields
             i_s_dq = i_full[indices]
@@ -98,12 +109,15 @@ class SpatialHarmonicsDataset(BaseDataset):
 
     Parameters
     ----------
-    data_path : str
+    data_path : str | Path
         Path to the npz file containing the dataset.
     base : ~motulator.drive.utils.BaseValues
         Base values of target machine
     subsample : int, optional
         Subsampling rate, defaults to 1 (no subsampling).
+    subsample_offset : int, optional
+        Index of the first data point taken in the subsampling, defaults to 0. The
+        offset is in the range from 0 to ``subsample - 1``.
 
     """
 
@@ -139,20 +153,26 @@ def get_loader(
     batch_size: int = 16,
     shuffle: bool = True,
     subsample: int = 1,
+    subsample_offset: int = 0,
 ) -> DataLoader:
     """Create a DataLoader for GradNet training data."""
-    dataset_path = Path(dataset_path)
     dataset_cls = SpatialHarmonicsDataset if k is not None else BaseDataset
-    dataset = dataset_cls(data_path=str(dataset_path), base=base, subsample=subsample)
+    dataset = dataset_cls(
+        data_path=dataset_path,
+        base=base,
+        subsample=subsample,
+        subsample_offset=subsample_offset,
+    )
     return DataLoader(dataset=dataset, batch_size=batch_size, shuffle=shuffle)
 
 
 # %%
 def get_training_data(
-    dataset_path: str,
+    dataset_path: str | Path,
     base: BaseValues,
     subsample: int = 1,
     other_keys: list[str] | None = None,
+    subsample_offset: int = 0,
 ) -> tuple[tuple[np.ndarray, ...], tuple[np.ndarray, ...]]:
     """
     Get the training and validation data used by the model.
@@ -162,7 +182,7 @@ def get_training_data(
 
     Parameters
     ----------
-    dataset_path : str
+    dataset_path : str | Path
         Path to the npz file containing the dataset.
     base : ~motulator.drive.utils.BaseValues
         Base values of the target machine. They are only needed to re-instantiate the
@@ -172,6 +192,8 @@ def get_training_data(
     other_keys : list[str] | None, optional
         Additional fields of the npz file to be returned after the flux linkage and
         current, defaults to None (no additional fields).
+    subsample_offset : int, optional
+        Index of the first data point taken in the subsampling, defaults to 0.
 
     Returns
     -------
@@ -184,7 +206,9 @@ def get_training_data(
         other_keys = []
 
     # Re-create the dataset to match training
-    ds = BaseDataset(dataset_path, base=base, subsample=subsample)
+    ds = BaseDataset(
+        dataset_path, base=base, subsample=subsample, subsample_offset=subsample_offset
+    )
 
     # Load full data
     keys = ["psi_s_dq", "i_s_dq"] + other_keys

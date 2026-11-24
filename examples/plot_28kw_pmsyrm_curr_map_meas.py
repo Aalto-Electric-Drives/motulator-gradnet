@@ -3,7 +3,7 @@
 ===============================================
 
 This example trains a GradNet current map for a 10-pole 28-kW PM synchronous reluctance
-machine (Brusa HSM1.10.18.04) from a measured dataset.
+machine (Brusa HSM1-10.18.04) from a measured dataset.
 The procedure is the same as in
 :doc:`/examples/plot_6kw_pmsyrm_curr_map_meas`.
 
@@ -25,7 +25,7 @@ from motulator_gradnet import (
 # %%
 # Compute base values based on the nominal values.
 
-nom = utils.NominalValues(U=283, I=78, f=408, P=25e3, tau=49)
+nom = utils.NominalValues(U=283, I=78, f=383, P=25e3, tau=52)
 base = utils.BaseValues.from_nominal(nom, n_p=5)
 
 # %%
@@ -61,9 +61,7 @@ current_map_fcn = gn.CurrentMap(model)
 # %%
 # Load the dataset for comparison and split it into training and validation sets.
 
-train_data, val_data = get_training_data(
-    str(dataset_path), subsample=subsample, base=base
-)
+train_data, val_data = get_training_data(dataset_path, subsample=subsample, base=base)
 
 # %%
 # Plot the current map.
